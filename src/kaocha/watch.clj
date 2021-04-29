@@ -49,7 +49,17 @@
         result (try
                  (api/run config)
                  (catch Throwable t
-                   (println "[watch] Fatal error in test run" t)))]
+                   (println "[watch] Fatal darong:error:" (some-> t
+                                                                  (ex-data)
+                                                                  :caused-by
+                                                                  :actual
+                                                                  (ex-message)))
+                   (println "[watch] Fatal darong:cause:" (some-> t
+                                                                  (ex-data)
+                                                                  :caused-by
+                                                                  :actual
+                                                                  (ex-cause)
+                                                                  (ex-message)))))]
     (println)
     result))
 
